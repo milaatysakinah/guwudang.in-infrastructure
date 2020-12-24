@@ -1,0 +1,53 @@
+version: '3.7'
+
+services:
+  proxy:
+    image: jwilder/nginx-proxy:0.7.0
+    restart: unless-stopped
+    ports: 
+      - "80:80"
+      - "443:443"
+    volumes: 
+      # TODO: Bake new image or Let 'em be
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ./nginx-proxy.conf:/etc/nginx/conf.d/nginx-proxy.conf:ro
+    
+  
+  backend:
+    image: izzatbey/app-guwudangin:1.1
+    container_name: app-guwudangin
+    restart: unless-stopped
+    environment: 
+      # TODO: Verify domain name (maybe from terraform)
+      VIRTUAL_HOST: api.guwudangin.me
+    # TODO: Need better handling
+    env_file: ".env"
+    
+
+  frontend:
+    image: izzatbey/app-guwudangin-frontend:1.0
+    restart: unless-stopped
+    environment: 
+      # TODO: Verify domain name (maybe from terraform)
+      VIRTUAL_HOST: www.guwudangin.me
+    
+
+  db:
+    image: mysql:5.7.31
+    container_name: db
+    restart: unless-stopped
+    volumes: 
+        - mysql-data:/var/lib/mysql/data
+    environment: 
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_USER: ${DB_USERNAME}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        SERVICE_TAGS: dev
+        SERVICE_NAME: mysql
+
+volumes:
+  mysql-data:
+    driver: local
+
+  
