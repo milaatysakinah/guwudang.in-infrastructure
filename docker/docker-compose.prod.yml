@@ -9,7 +9,7 @@ services:
       - "443:443"
     volumes: 
       # TODO: Bake new image or Let 'em be
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx-proxy.conf:/etc/nginx/conf.d/nginx-proxy.conf:ro
     
   
@@ -35,9 +35,9 @@ services:
   db:
     image: mysql:5.7.31
     container_name: db
-    restart: unless-stopped
+    #restart: unless-stopped
     volumes: 
-        - mysql-data:/var/lib/mysql/data
+        - mysql_data:/var/lib/mysql
     environment: 
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_USER: ${DB_USERNAME}
@@ -47,7 +47,7 @@ services:
         SERVICE_NAME: mysql
 
 volumes:
-  mysql-data:
+  mysql_data:
     driver: local
 
   
