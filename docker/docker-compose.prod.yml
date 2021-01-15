@@ -25,7 +25,7 @@ services:
     
 
   frontend:
-    image: izzatbey/app-guwudangin-frontend:1.4
+    image: izzatbey/app-guwudangin-frontend:1.5
     restart: unless-stopped
     environment: 
       # TODO: Verify domain name (maybe from terraform)
