@@ -14,7 +14,7 @@ services:
     
   
   backend:
-    image: izzatbey/app-guwudangin:1.7
+    image: izzatbey/app-guwudangin:1.8
     container_name: app-guwudangin
     restart: unless-stopped
     environment: 
@@ -25,7 +25,7 @@ services:
     
 
   frontend:
-    image: izzatbey/app-guwudangin-frontend:1.7
+    image: izzatbey/app-guwudangin-frontend:1.8
     restart: unless-stopped
     environment: 
       # TODO: Verify domain name (maybe from terraform)
