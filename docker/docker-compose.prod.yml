@@ -14,7 +14,7 @@ services:
     
   
   backend:
-    image: izzatbey/app-guwudangin:1.8
+    image: izzatbey/app-guwudangin:1.9
     container_name: app-guwudangin
     restart: unless-stopped
     environment: 
